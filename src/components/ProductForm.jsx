@@ -1,60 +1,73 @@
+import React, { useState } from "react";
+
 function ProductForm() {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // ป้องกันการรีเฟรชหน้าเมื่อส่งฟอร์ม
+
+    const productData = {
+      name,
+      price: parseFloat(price),
+      image,
+      description,
+    };
+
+    // แสดงข้อมูลใน Alert
+    alert(JSON.stringify(productData, null, 2));
+
+    // เคลียร์ข้อมูลในฟอร์ม
+    setName("");
+    setPrice("");
+    setImage("");
+    setDescription("");
+  };
+
   return (
-    <form className="post-form">
-      <h1>Create Product Form</h1>
-      <div className="input-container">
-        <label>
-          Name
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Enter name here"
-            onChange={() => {}}
-          />
-        </label>
+    <form onSubmit={handleSubmit} className="product-form">
+      <div>
+        <label htmlFor="name">Product Name</label>
+        <input
+          id="name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
       </div>
-      <div className="input-container">
-        <label>
-          Image Url
-          <input
-            id="image"
-            name="image"
-            type="text"
-            placeholder="Enter image url here"
-            onChange={() => {}}
-          />
-        </label>
+      <div>
+        <label htmlFor="price">Price</label>
+        <input
+          id="price"
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        />
       </div>
-      <div className="input-container">
-        <label>
-          Price
-          <input
-            id="price"
-            name="price"
-            type="number"
-            placeholder="Enter price here"
-            onChange={() => {}}
-          />
-        </label>
+      <div>
+        <label htmlFor="image">Image URL</label>
+        <input
+          id="image"
+          type="text"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          required
+        />
       </div>
-      <div className="input-container">
-        <label>
-          Description
-          <textarea
-            id="description"
-            name="description"
-            type="text"
-            placeholder="Enter description here"
-            onChange={() => {}}
-            rows={4}
-            cols={30}
-          />
-        </label>
+      <div>
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
       </div>
-      <div className="form-actions">
-        <button type="submit">Create</button>
-      </div>
+      <button type="submit">Create Product</button>
     </form>
   );
 }
